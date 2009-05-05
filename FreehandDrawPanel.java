@@ -50,14 +50,37 @@ class FreehandDrawPanel extends JPanel implements MouseMotionListener, MouseList
 	public int getBrushSize() {
 		return( this.currentBrushSize );
 	}
+
+	/**
+	 * Setter for the brush size.
+	 * @param newBrushSize The new brush size.
+	 */
 	public void setBrushSize( int newBrushSize ) {
 		this.currentBrushSize = newBrushSize;
 	}
+
+	/**
+	 * Getter for the brush color.
+	 * @return The brush color.
+	 */
 	public Color getColor() {
 		return( this.currentColor );
 	}
+
+	/**
+	 * Setter for the brush size.
+	 * @param newColor The new brush color.
+	 */
 	public void setColor( Color newColor ) {
 		this.currentColor = newColor;
+	}
+
+	/**
+	 * Getter for the points drawn.
+	 * @return a Copy of the list of points drawn onto this panel.
+	 */
+	public LinkedList<Point> getPoints() {
+		return( new LinkedList( pointList ) );
 	}
 
 	private void updateSize() {
@@ -66,10 +89,6 @@ class FreehandDrawPanel extends JPanel implements MouseMotionListener, MouseList
 		EventQueue evtQ = tk.getSystemEventQueue();
 		evtQ.postEvent( new ComponentEvent( this, ComponentEvent.COMPONENT_RESIZED ) );
 		repaint();
-	}
-
-	public LinkedList<Point> getPoints() {
-		return( pointList );
 	}
 
 	public void mousePressed(MouseEvent e) {
