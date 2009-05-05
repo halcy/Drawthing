@@ -80,9 +80,14 @@ class FreehandDrawPanel extends JPanel implements MouseMotionListener, MouseList
 	 * @return a Copy of the list of points drawn onto this panel.
 	 */
 	public LinkedList<Point> getPoints() {
-		return( new LinkedList( pointList ) );
+		LinkedList<Point> returnList = new LinkedList<Point>();
+		returnList.addAll( pointList );
+		return( returnList );
 	}
 
+	/**
+	 * Helper for updating the internal canvas size.
+	 */
 	private void updateSize() {
 		this.setPreferredSize( new Dimension( this.width, this.height ) );
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -91,51 +96,80 @@ class FreehandDrawPanel extends JPanel implements MouseMotionListener, MouseList
 		repaint();
 	}
 
+	/**
+	 * Mouse event: Mouse down. Adds a new starting point.
+	 * @param e The mouse event we are reacting to.
+	 */
 	public void mousePressed(MouseEvent e) {
 		currentlyDrawing = true;
 		pointList.add( new Point( e.getX(), e.getY(),
 			this.currentColor, this.currentBrushSize, false ) );
 	}
 
+	/**
+	 * Mouse event: Mouse up. Adds a new end point.
+	 * @param e The mouse event we are reacting to.
+	 */
 	public void mouseReleased(MouseEvent e) {
 		currentlyDrawing = false;
 		pointList.add( new Point( e.getX(), e.getY(),
 			this.currentColor, this.currentBrushSize, true ) );
 	}
 
+	/**
+	 * Mouse event: Mouse entered component. Does nothing.
+	 * @param e The mouse event we are reacting to.
+	 */
 	public void mouseEntered(MouseEvent e) {
 		// Empty
 	}
 
+	/**
+	 * Mouse event: Mouse left component. Does nothing.
+	 * @param e The mouse event we are reacting to.
+	 */
 	public void mouseExited(MouseEvent e) {
-		currentlyDrawing = false;
-		pointList.add( new Point( e.getX(), e.getY(),
-			this.currentColor, this.currentBrushSize, true ) );
+		// Empty
 	}
 
+	/**
+	 * Mouse event: Mouse clicked. Does nothing.
+	 * @param e The mouse event we are reacting to.
+	 */
 	public void mouseClicked(MouseEvent e) {
 		// Empty
 	}
 
+	/**
+	 * Mouse event: Mouse moved without button. Does nothing.
+	 * @param e The mouse event we are reacting to.
+	 */
 	public void mouseMoved( MouseEvent e ) {
 		// Empty.
 	}
 
+	/**
+	 * Mouse event: Mouse moved with button. Adds a new point, possibly resizes the canvas.
+	 * @param e The mouse event we are reacting to.
+	 */
 	public void mouseDragged( MouseEvent e ) {
 		if( currentlyDrawing ) {
 			pointList.add( new Point( e.getX(), e.getY(), this.currentColor, this.currentBrushSize, false ) );
 		}
 		this.paintLastLineSegment( this.getGraphics() );
 		if( e.getX() > this.width ) {
-			this.width = e.getX();
-			updateSize();
+			this.width = e.getX() - this.getPosition().getX();
+			this.updateSize();
 		}
 		if( e.getY() > this.height ) {
-			this.height = e.getY();
-			updateSize();
+			this.height = e.getY() - this.getPosition().getY();;
+			this.updateSize();
 		}
 	}
 
+	/**
+	 * Delete points up to the last end point.
+	 */
 	public void undoLastStroke() {
 		ListIterator<Point> l = this.pointList.listIterator(
 			this.pointList.size()
@@ -160,8 +194,14 @@ class FreehandDrawPanel extends JPanel implements MouseMotionListener, MouseList
 		this.repaint();
 	}
 
+	/**
+	 * Remove all points from the canvas and reset the canvas size.
+	 */
 	public void clear() {
 		this.pointList.clear();
+		this.width = 400;
+		this.height = 400;
+		this.updateSize();
 		this.repaint();
 	}
 
@@ -214,7 +254,8 @@ class FreehandDrawPanel extends JPanel implements MouseMotionListener, MouseList
 	}
 
 	/**
-	 * 
+	 * Repaint handler. Resets the background and redraws all points.
+	 * @param g The graphics context to operate on.
 	 */
 	public void paintComponent( Graphics g ) {
 		Graphics2D g2d = ( Graphics2D )g;
@@ -244,6 +285,10 @@ class FreehandDrawPanel extends JPanel implements MouseMotionListener, MouseList
 		}
 	}
 
+	/**
+	 * Line paint handler. Adds the last line segment drawn to the paint context.
+	 * @param g The graphics context to operate on.
+	 */
 	public void paintLastLineSegment( Graphics g ) {
 		Graphics2D g2d = ( Graphics2D )g;
 
