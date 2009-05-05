@@ -37,8 +37,9 @@ public class Drawthing extends JFrame {
 		// Color selection
 		JButton colorButton = new JButton( "Color" );
 		colorButton.addActionListener( new ColorChangeListener( this.canvas ) );
+		colorButton.setMnemonic( 'd' );
 		controlPanel.add( colorButton );
-
+	
 		// Spacer
 		controlPanel.add( Box.createRigidArea( new Dimension( 5, 5 ) ) );
 
@@ -51,6 +52,7 @@ public class Drawthing extends JFrame {
 		JComboBox brushSizeBox = new JComboBox( brushSizes );
 		brushSizeBox.addActionListener( new BrushSizeListener( this.canvas ) );
 		brushSizeBox.setMaximumSize( new Dimension( 40, 40 ) );
+		colorButton.setMnemonic( 'b' );
 		controlPanel.add( brushSizeBox );
 
 		// Spacer
@@ -59,11 +61,13 @@ public class Drawthing extends JFrame {
 		// Undo
 		JButton undoButton = new JButton( "Undo" );
 		undoButton.addActionListener( new UndoListener( this.canvas ) );
+		colorButton.setMnemonic( 'z' );
 		controlPanel.add( undoButton );
 
 		// Reset canvas
 		JButton resetButton = new JButton( "Reset" );
 		resetButton.addActionListener( new ResetListener( this.canvas ) );
+		colorButton.setMnemonic( 'n' );
 		controlPanel.add( resetButton );
 
 		// Spacer
@@ -72,6 +76,7 @@ public class Drawthing extends JFrame {
 		// Save to SVG
 		JButton saveButton = new JButton( "Save" );
 		saveButton.addActionListener( new SaveListener( this.canvas ) );
+		colorButton.setMnemonic( 's' );
 		controlPanel.add( saveButton );
 
 		// Spacer
