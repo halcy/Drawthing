@@ -158,11 +158,11 @@ class FreehandDrawPanel extends JPanel implements MouseMotionListener, MouseList
 		}
 		this.paintLastLineSegment( this.getGraphics() );
 		if( e.getX() > this.width ) {
-			this.width = e.getX() - this.getPosition().getX();
+			this.width = e.getX();
 			this.updateSize();
 		}
 		if( e.getY() > this.height ) {
-			this.height = e.getY() - this.getPosition().getY();;
+			this.height = e.getY();
 			this.updateSize();
 		}
 	}
