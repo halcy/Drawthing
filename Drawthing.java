@@ -3,6 +3,7 @@ import java.io.*;
 import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.filechooser.*;
 
 /**
  * A simple drawing app using FreehandDrawPanel.
@@ -28,6 +29,7 @@ public class Drawthing extends JFrame {
 		// Control interface container
 		JPanel controlPanel = new JPanel();
 		controlPanel.setLayout( new BoxLayout( controlPanel, BoxLayout.X_AXIS ) );
+		controlPanel.setMaximumSize( new Dimension( Short.MAX_VALUE, 40 ) );
 		this.add( controlPanel );
 
 		// Spacer
@@ -182,8 +184,9 @@ public class Drawthing extends JFrame {
 		 */
 		public void actionPerformed( ActionEvent e ) {
 			JFileChooser saveFileDialog = new JFileChooser();
-			if( saveFileDialog.showSaveDialog( this.canvas ) ==
-				JFileChooser.APPROVE_OPTION ) {
+			FileNameExtensionFilter svgFiles = new FileNameExtensionFilter( "Scalable vector graphics (.svg)", "svg" );
+			saveFileDialog.setFileFilter( svgFiles );
+			if( saveFileDialog.showSaveDialog( this.canvas ) == JFileChooser.APPROVE_OPTION ) {
 				File saveFile = saveFileDialog.getSelectedFile();
 				try {
 					PrintWriter out = new PrintWriter(
