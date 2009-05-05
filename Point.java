@@ -68,7 +68,7 @@ public final class Point {
 
 	/**
 	 * Is this point last in some line?.
-	 * @return This points brush color.
+	 * @return True if last, false if not.
 	 */
 	public boolean isEndPoint() {
 		return( this.endPoint );
