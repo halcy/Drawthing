@@ -1,0 +1,22 @@
+Drawthing - A simple Swing sketch pad application.
+
+To run: java Drawthing
+To compile (Requires a JDK and some Make utility): make
+(That, or figure out the command to build it without make)
+
+Use the color button to select a color, brush size box to select
+a brush size, draw on the white canvas with the mouse.
+
+Resize the window to change canvas size. Minimum canvas size is
+400x400. Canvas will automatically expand to bottom and right.
+
+Undo and reset buttons do what you would expect them to do.
+
+Save button allows you to save the current drawing to an SVG
+file fit for further editing in a vector editor like inscape
+or for display on the internet by newer browsers.
+
+The newest version of this applications source code can be 
+found at http://github.com/halcy/Drawthing/tree/master
+
+Direct questions and such to lorenzd@gmail.com
